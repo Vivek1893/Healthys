@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Healthys – Pure Wellness, Naturally</title>
+  <meta name="description" content="Healthys brings premium natural wellness products – organic spices, herbal teas, superfoods & personal care – straight from nature to your doorstep." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ======== ANNOUNCEMENT BAR ======== -->
+  <div class="announcement-bar" id="announcementBar">
+    <div class="announcement-inner">
+      <span>🌿 Free Shipping on orders above ₹499</span>
+      <span class="sep">|</span>
+      <span>🎉 Use code <strong>HEALTH20</strong> for extra 20% OFF</span>
+      <span class="sep">|</span>
+      <span>🚚 Same-day dispatch from certified warehouses</span>
+    </div>
+    <button class="close-announce" id="closeAnnounce" aria-label="Close announcement">&times;</button>
+  </div>
+
+  <!-- ======== HEADER / NAVBAR ======== -->
+  <header class="header" id="header">
+    <div class="header-inner container">
+      <!-- Logo -->
+      <a href="#" class="logo" aria-label="Healthys Home">
+        <div class="logo-icon">
+          <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+            <circle cx="17" cy="17" r="17" fill="url(#logoGrad)"/>
+            <path d="M17 8C14 8 10 11 10 15c0 6 7 13 7 13s7-7 7-13c0-4-4-7-7-7z" fill="white" opacity="0.9"/>
+            <path d="M17 13c-1.5 0-2.5 1.2-2.5 2.5S15.5 18 17 18s2.5-1.2 2.5-2.5S18.5 13 17 13z" fill="url(#logoGrad)"/>
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="34" y2="34">
+                <stop offset="0%" stop-color="#2d7a4f"/>
+                <stop offset="100%" stop-color="#5bb37a"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-name">Healthys</span>
+          <span class="logo-tagline">Pure &amp; Natural</span>
+        </div>
+      </a>
+
+      <!-- Location Picker -->
+      <div class="location-wrap" id="locationWrap">
+        <button class="location-btn" id="locationBtn" aria-label="Select delivery location">
+          <i class="fa-solid fa-location-dot"></i>
+          <div class="location-text">
+            <span class="location-label">Deliver to</span>
+            <span class="location-city" id="locationCity">Select City</span>
+          </div>
+          <i class="fa-solid fa-chevron-down location-chevron" id="locationChevron"></i>
+        </button>
+        <div class="location-dropdown" id="locationDropdown">
+          <div class="location-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="locationSearchInput" placeholder="Search city..." autocomplete="off"/>
+          </div>
+          <div class="location-results" id="locationResults"></div>
+          <div class="popular-cities">
+            <div class="pop-city-label">Popular Cities</div>
+            <div class="pop-cities-grid">
+              <button class="pop-city-btn" onclick="selectCity('Mumbai')">Mumbai</button>
+              <button class="pop-city-btn" onclick="selectCity('Delhi')">Delhi</button>
+              <button class="pop-city-btn" onclick="selectCity('Bengaluru')">Bengaluru</button>
+              <button class="pop-city-btn" onclick="selectCity('Hyderabad')">Hyderabad</button>
+              <button class="pop-city-btn" onclick="selectCity('Chennai')">Chennai</button>
+              <button class="pop-city-btn" onclick="selectCity('Pune')">Pune</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div class="search-wrap">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="searchInput" placeholder="Search products, herbs, teas..." autocomplete="off" />
+          <button class="search-btn" aria-label="Search" onclick="runSearch()">Search</button>
+        </div>
+        <div class="search-suggestions" id="searchSuggestions">
+          <div class="search-results-list" id="searchResultsList">
+            <div class="suggestion-item" data-static><i class="fa-solid fa-fire-flame-curved"></i> Turmeric Powder</div>
+            <div class="suggestion-item" data-static><i class="fa-solid fa-leaf"></i> Ashwagandha</div>
+            <div class="suggestion-item" data-static><i class="fa-solid fa-mug-hot"></i> Green Tea</div>
+            <div class="suggestion-item" data-static><i class="fa-solid fa-seedling"></i> Moringa Powder</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nav Icons -->
+      <div class="nav-actions">
+        <a href="profile.html" class="nav-icon" id="profileBtn" aria-label="Profile">
+          <i class="fa-regular fa-user"></i>
+          <span class="nav-label">Profile</span>
+        </a>
+        <a href="wishlist.html" class="nav-icon wishlist-icon" id="wishlistBtn" aria-label="Wishlist">
+          <i class="fa-regular fa-heart"></i>
+          <span class="badge" id="wishlistBadge">0</span>
+          <span class="nav-label">Wishlist</span>
+        </a>
+        <a href="cart.html" class="nav-icon cart-icon" id="cartBtn" aria-label="Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="badge" id="cartBadge">0</span>
+          <span class="nav-label">Cart</span>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Menu -->
+    <nav class="mobile-nav" id="mobileNav">
+      <ul>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#brand">Our Story</a></li>
+        <li><a href="#values">Values</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="mobile-nav-divider"></li>
+        <li><a href="profile.html"><i class="fa-regular fa-user"></i> My Profile</a></li>
+        <li><a href="wishlist.html"><i class="fa-regular fa-heart"></i> Wishlist</a></li>
+        <li><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i> My Cart</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ======== HERO SECTION ======== -->
+  <section class="hero" id="hero">
+    <div class="hero-slider" id="heroSlider">
+
+      <!-- Slide 1 -->
+      <div class="hero-slide active" style="background: linear-gradient(135deg, #0a3d1f 0%, #1a6b3a 50%, #2d9655 100%);">
+        <div class="slide-content container">
+          <div class="slide-text">
+            <span class="slide-badge">🌿 Limited Time Offer</span>
+            <h1 class="slide-title">Up to <span class="highlight">75% OFF</span> on Premium Wellness</h1>
+            <p class="slide-desc">Handpicked organic herbs, spices & superfoods from nature's finest sources. Pure, potent, and proven.</p>
+            <div class="slide-cta">
+              <a href="#products" class="btn btn-primary">Shop Now <i class="fa-solid fa-arrow-right"></i></a>
+              <a href="#brand" class="btn btn-outline-light">Our Story</a>
+            </div>
+            <div class="slide-stats">
+              <div class="stat"><span class="stat-num">2L+</span><span class="stat-label">Happy Customers</span></div>
+              <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Products</span></div>
+              <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Natural</span></div>
+            </div>
+          </div>
+          <div class="slide-visual">
+            <div class="promo-badge-big">
+              <span class="promo-off">75%</span>
+              <span class="promo-text">OFF</span>
+            </div>
+            <div class="hero-img-wrap">
+              <img src="assets/hero_banner_1.png" alt="Wellness products collection" class="hero-img" />
+              <div class="floating-card card-1"><i class="fa-solid fa-star" style="color:#fbbf24"></i> 4.9 Rating</div>
+              <div class="floating-card card-2"><i class="fa-solid fa-shield-halved" style="color:#22c55e"></i> 100% Organic</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="hero-slide" style="background: linear-gradient(135deg, #4a1942 0%, #7b2d6b 50%, #a855a0 100%);">
+        <div class="slide-content container">
+          <div class="slide-text">
+            <span class="slide-badge">🫖 New Arrival</span>
+            <h1 class="slide-title">Discover Our <span class="highlight-purple">Herbal Tea</span> Collection</h1>
+            <p class="slide-desc">70+ premium blends crafted for immunity, relaxation, digestion & energy. Your daily wellness ritual awaits.</p>
+            <div class="slide-cta">
+              <a href="#tea" class="btn btn-primary-purple">Explore Teas <i class="fa-solid fa-arrow-right"></i></a>
+              <a href="#products" class="btn btn-outline-light">View All</a>
+            </div>
+          </div>
+          <div class="slide-visual">
+            <div class="promo-badge-big" style="background: linear-gradient(135deg, #a855a0, #7b2d6b);">
+              <span class="promo-off">40%</span>
+              <span class="promo-text">OFF</span>
+            </div>
+            <div class="hero-img-wrap">
+              <div class="hero-illustration tea-illustration">
+                <i class="fa-solid fa-mug-hot" style="font-size:6rem;color:rgba(255,255,255,0.92);"></i>
+                <div style="margin-top:1rem;font-size:1.5rem;color:#fde8ff;font-weight:700;">Premium Tea Blends</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="hero-slide" style="background: linear-gradient(135deg, #1a3a5c 0%, #2563a8 50%, #3b82e8 100%);">
+        <div class="slide-content container">
+          <div class="slide-text">
+            <span class="slide-badge">⚡ Best Sellers</span>
+            <h1 class="slide-title">Superfoods for <span class="highlight-blue">Super You</span></h1>
+            <p class="slide-desc">Ashwagandha, Moringa, Spirulina & more. Science-backed, nature-sourced health boosters.</p>
+            <div class="slide-cta">
+              <a href="#herbal" class="btn btn-primary-blue">Shop Superfoods <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+          <div class="slide-visual">
+            <div class="promo-badge-big" style="background: linear-gradient(135deg, #3b82e8, #1a3a5c);">
+              <span class="promo-off">60%</span>
+              <span class="promo-text">OFF</span>
+            </div>
+            <div class="hero-img-wrap">
+              <div class="hero-illustration">
+                <i class="fa-solid fa-seedling" style="font-size:6rem;color:rgba(255,255,255,0.92);"></i>
+                <div style="margin-top:1rem;font-size:1.5rem;color:#e0f0ff;font-weight:700;">Pure Superfoods</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Hero Controls -->
+    <div class="hero-controls">
+      <button class="hero-prev" id="heroPrev" aria-label="Previous slide"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="hero-dots" id="heroDots">
+        <button class="hero-dot active" data-slide="0" aria-label="Slide 1"></button>
+        <button class="hero-dot" data-slide="1" aria-label="Slide 2"></button>
+        <button class="hero-dot" data-slide="2" aria-label="Slide 3"></button>
+      </div>
+      <button class="hero-next" id="heroNext" aria-label="Next slide"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </section>
+
+  <!-- ======== TRUST STRIP ======== -->
+  <section class="trust-strip">
+    <div class="container trust-inner">
+      <div class="trust-item"><i class="fa-solid fa-leaf"></i><span>100% Natural</span></div>
+      <div class="trust-item"><i class="fa-solid fa-flask"></i><span>Lab Tested</span></div>
+      <div class="trust-item"><i class="fa-solid fa-truck-fast"></i><span>Free Delivery ₹499+</span></div>
+      <div class="trust-item"><i class="fa-solid fa-rotate-left"></i><span>Easy Returns</span></div>
+      <div class="trust-item"><i class="fa-solid fa-shield-halved"></i><span>Secure Payment</span></div>
+      <div class="trust-item"><i class="fa-solid fa-certificate"></i><span>FSSAI Certified</span></div>
+    </div>
+  </section>
+
+  <!-- ======== CATEGORIES NAV ======== -->
+  <section class="categories-nav" id="categories">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Shop by Category</h2>
+        <p class="section-sub">Explore our curated wellness collections</p>
+      </div>
+      <div class="cat-grid">
+        <a href="#spices" class="cat-card" id="cat-spices">
+          <div class="cat-icon-wrap" style="background: linear-gradient(135deg, #ff8a00, #ffd166);">
+            <i class="fa-solid fa-mortar-pestle"></i>
+          </div>
+          <span class="cat-name">Spices &amp; Masala</span>
+          <span class="cat-count">45+ Products</span>
+        </a>
+        <a href="#tea" class="cat-card" id="cat-tea">
+          <div class="cat-icon-wrap" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
+            <i class="fa-solid fa-mug-hot"></i>
+          </div>
+          <span class="cat-name">Tea &amp; Drinks</span>
+          <span class="cat-count">70+ Products</span>
+        </a>
+        <a href="#healthy-food" class="cat-card" id="cat-food">
+          <div class="cat-icon-wrap" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
+            <i class="fa-solid fa-bowl-food"></i>
+          </div>
+          <span class="cat-name">Healthy Food</span>
+          <span class="cat-count">60+ Products</span>
+        </a>
+        <a href="#herbal" class="cat-card" id="cat-herbal">
+          <div class="cat-icon-wrap" style="background: linear-gradient(135deg, #134e5e, #71b280);">
+            <i class="fa-solid fa-seedling"></i>
+          </div>
+          <span class="cat-name">Herbal Powders</span>
+          <span class="cat-count">35+ Products</span>
+        </a>
+        <a href="#personal-care" class="cat-card" id="cat-care">
+          <div class="cat-icon-wrap" style="background: linear-gradient(135deg, #e96c9e, #fc9dcb);">
+            <i class="fa-solid fa-hand-sparkles"></i>
+          </div>
+          <span class="cat-name">Personal Care</span>
+          <span class="cat-count">50+ Products</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== PRODUCTS SECTION ======== -->
+  <main class="products-main" id="products">
+
+    <!-- SPICES Section -->
+    <section class="product-section" id="spices">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🌶️ Spices &amp; Masala</h2>
+            <p class="section-sub">Authentic Indian spices, sourced directly from farms</p>
+          </div>
+          <a href="#spices" class="view-all-btn">View All <i class="fa-solid fa-angle-right"></i></a>
+        </div>
+        <div class="product-grid" id="spices-grid">
+          <!-- Products are rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TEA Section -->
+    <section class="product-section bg-soft" id="tea">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🫖 Tea &amp; Drinks</h2>
+            <p class="section-sub">Crafted blends for your wellness ritual</p>
+          </div>
+          <a href="#tea" class="view-all-btn">View All <i class="fa-solid fa-angle-right"></i></a>
+        </div>
+        <div class="product-grid" id="tea-grid">
+        </div>
+      </div>
+    </section>
+
+    <!-- HEALTHY FOOD Section -->
+    <section class="product-section" id="healthy-food">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🥗 Healthy Food Products</h2>
+            <p class="section-sub">Supercharge your diet with nature's best</p>
+          </div>
+          <a href="#healthy-food" class="view-all-btn">View All <i class="fa-solid fa-angle-right"></i></a>
+        </div>
+        <div class="product-grid" id="food-grid">
+        </div>
+      </div>
+    </section>
+
+    <!-- HERBAL Section -->
+    <section class="product-section bg-soft" id="herbal">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🌿 Herbal &amp; Superfood Powders</h2>
+            <p class="section-sub">Ancient wisdom meets modern nutrition</p>
+          </div>
+          <a href="#herbal" class="view-all-btn">View All <i class="fa-solid fa-angle-right"></i></a>
+        </div>
+        <div class="product-grid" id="herbal-grid">
+        </div>
+      </div>
+    </section>
+
+    <!-- PERSONAL CARE Section -->
+    <section class="product-section" id="personal-care">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🧴 Personal &amp; Home Care</h2>
+            <p class="section-sub">Natural formulas for your skin and home</p>
+          </div>
+          <a href="#personal-care" class="view-all-btn">View All <i class="fa-solid fa-angle-right"></i></a>
+        </div>
+        <div class="product-grid" id="care-grid">
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======== REVIEWS SECTION ======== -->
+  <section class="reviews-section" id="reviews">
+    <div class="container">
+      <div class="section-header centered">
+        <h2 class="section-title">💬 What Our Customers Say</h2>
+        <p class="section-sub">Over 2 lakh happy customers across India</p>
+      </div>
+      <div class="reviews-track-wrap">
+        <button class="review-nav prev" id="reviewPrev" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="reviews-track" id="reviewsTrack">
+          <!-- Reviews rendered by JS -->
+        </div>
+        <button class="review-nav next" id="reviewNext" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <div class="review-summary">
+        <div class="rating-big">4.8</div>
+        <div>
+          <div class="stars-big">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+          </div>
+          <p>Based on 24,000+ verified reviews</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== AVAILABLE ACROSS INDIA ======== -->
+  <section class="availability-section" id="availability">
+    <div class="container">
+      <div class="section-header centered">
+        <h2 class="section-title">🛒 Available Across India</h2>
+        <p class="section-sub">Find Healthys on your favourite marketplace</p>
+      </div>
+      <div class="marketplace-row">
+        <!-- Amazon -->
+        <a href="#" class="marketplace-card" aria-label="Amazon">
+          <div class="marketplace-logo amazon">
+            <svg viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text x="10" y="45" font-family="Arial" font-weight="bold" font-size="40" fill="#232F3E">amazon</text>
+              <path d="M12 52 Q100 65 180 52" stroke="#FF9900" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <polygon points="180,52 174,48 174,56" fill="#FF9900"/>
+            </svg>
+          </div>
+          <span class="marketplace-label">Shop on Amazon</span>
+        </a>
+        <!-- Flipkart -->
+        <a href="#" class="marketplace-card" aria-label="Flipkart">
+          <div class="marketplace-logo flipkart">
+            <svg viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="200" height="60" rx="8" fill="#0068DA"/>
+              <text x="12" y="44" font-family="Arial" font-weight="bold" font-size="32" fill="white">flipkart</text>
+              <circle cx="165" cy="30" r="16" fill="#FFD700"/>
+              <path d="M157 30 L165 22 L173 30 L169 30 L169 38 L161 38 L161 30 Z" fill="#0068DA"/>
+            </svg>
+          </div>
+          <span class="marketplace-label">Shop on Flipkart</span>
+        </a>
+        <!-- Meesho -->
+        <a href="#" class="marketplace-card" aria-label="Meesho">
+          <div class="marketplace-logo meesho">
+            <svg viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text x="10" y="45" font-family="Arial" font-weight="bold" font-size="38" fill="#9B2FCE">Meesho</text>
+            </svg>
+          </div>
+          <span class="marketplace-label">Shop on Meesho</span>
+        </a>
+        <!-- Jiomart -->
+        <a href="#" class="marketplace-card" aria-label="JioMart">
+          <div class="marketplace-logo jiomart">
+            <svg viewBox="0 0 200 60" fill="none">
+              <text x="10" y="45" font-family="Arial" font-weight="bold" font-size="34" fill="#0B3D91">JIO</text>
+              <text x="80" y="45" font-family="Arial" font-weight="800" font-size="34" fill="#E31E24">mart</text>
+            </svg>
+          </div>
+          <span class="marketplace-label">Shop on JioMart</span>
+        </a>
+        <!-- Blinkit -->
+        <a href="#" class="marketplace-card" aria-label="Blinkit">
+          <div class="marketplace-logo blinkit">
+            <svg viewBox="0 0 200 60" fill="none">
+              <text x="10" y="45" font-family="Arial" font-weight="900" font-size="38" fill="#1F1F1F">blink</text>
+              <text x="115" y="45" font-family="Arial" font-weight="900" font-size="38" fill="#F8C500">it</text>
+            </svg>
+          </div>
+          <span class="marketplace-label">Shop on Blinkit</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== BRAND STORY ======== -->
+  <section class="brand-section" id="brand">
+    <div class="container">
+      <div class="brand-inner">
+        <div class="brand-visual">
+          <div class="founder-card">
+            <div class="founder-avatar">
+              <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="60" cy="60" r="60" fill="url(#founderGrad)"/>
+                <circle cx="60" cy="48" r="20" fill="rgba(255,255,255,0.3)"/>
+                <ellipse cx="60" cy="95" rx="32" ry="22" fill="rgba(255,255,255,0.25)"/>
+                <text x="60" y="53" text-anchor="middle" font-size="22" fill="white" font-family="Inter" font-weight="600">AK</text>
+                <defs>
+                  <linearGradient id="founderGrad" x1="0" y1="0" x2="120" y2="120">
+                    <stop offset="0%" stop-color="#2d7a4f"/>
+                    <stop offset="100%" stop-color="#5bb37a"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="founder-info">
+              <div class="founder-name">Arjun Khanna</div>
+              <div class="founder-title">Founder &amp; CEO, Healthys</div>
+              <div class="founder-quote">"Pure goodness, from nature to you."</div>
+            </div>
+          </div>
+          <div class="brand-stats-grid">
+            <div class="brand-stat"><span class="brand-stat-num">2018</span><span class="brand-stat-label">Founded</span></div>
+            <div class="brand-stat"><span class="brand-stat-num">500+</span><span class="brand-stat-label">Products</span></div>
+            <div class="brand-stat"><span class="brand-stat-num">2L+</span><span class="brand-stat-label">Customers</span></div>
+            <div class="brand-stat"><span class="brand-stat-num">30+</span><span class="brand-stat-label">States</span></div>
+          </div>
+        </div>
+        <div class="brand-content">
+          <span class="section-badge">Our Story</span>
+          <h2 class="brand-title">From Purity to<br/><em>Healthy Living</em></h2>
+          <p class="brand-story">Born from a simple belief — <strong>nature holds the answer</strong> to our wellness. Healthys was founded in 2018 with a mission to bring the purest, most authentic natural products to every Indian household.</p>
+          <p class="brand-story">We work directly with over 200 certified farmers across India, ensuring every product is traceable, pure, and packed with nature's goodness. From the spice fields of Kerala to the tea gardens of Darjeeling, we bring you nothing but the best.</p>
+          <blockquote class="brand-quote">
+            "Our promise is simple – if we wouldn't give it to our own family, we won't sell it to yours."
+            <cite>– Arjun Khanna, Founder</cite>
+          </blockquote>
+          <div class="brand-cta">
+            <a href="#values" class="btn btn-primary">Know Our Story <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="#products" class="btn btn-outline">Shop Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== CORE VALUES ======== -->
+  <section class="values-section" id="values">
+    <div class="container">
+      <div class="section-header centered">
+        <h2 class="section-title">Our Core Values</h2>
+        <p class="section-sub">Principles that guide everything we do</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
+            <i class="fa-solid fa-leaf"></i>
+          </div>
+          <h3>Natural Ingredients</h3>
+          <p>Zero artificial additives. Every product is made from certified natural sources.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+            <i class="fa-solid fa-eye"></i>
+          </div>
+          <h3>Transparency</h3>
+          <p>Full ingredient disclosure and farm-to-shelf traceability on every product.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+            <i class="fa-solid fa-medal"></i>
+          </div>
+          <h3>Quality First</h3>
+          <p>FSSAI certified, lab-tested under international standards. Quality is non-negotiable.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+            <i class="fa-solid fa-earth-asia"></i>
+          </div>
+          <h3>Sustainability</h3>
+          <p>Eco-friendly packaging, carbon-neutral operations, and sustainable farming partnerships.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon" style="background: linear-gradient(135deg, #ec4899, #db2777);">
+            <i class="fa-solid fa-people-group"></i>
+          </div>
+          <h3>Community Driven</h3>
+          <p>Supporting 200+ farming families and building a wellness community across India.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== NEWSLETTER ======== -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-inner">
+        <div class="newsletter-text">
+          <i class="fa-solid fa-envelope-open-text newsletter-icon"></i>
+          <div>
+            <h2>Join the Healthys Family</h2>
+            <p>Get exclusive offers, wellness tips, and new launch alerts in your inbox.</p>
+          </div>
+        </div>
+        <form class="newsletter-form" id="newsletterForm" onsubmit="handleNewsletter(event)">
+          <input type="email" placeholder="Enter your email address" required aria-label="Email" />
+          <button type="submit" class="btn btn-white">Subscribe <i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-col brand-col">
+          <a href="#" class="logo footer-logo">
+            <div class="logo-icon">
+              <svg width="32" height="32" viewBox="0 0 34 34" fill="none">
+                <circle cx="17" cy="17" r="17" fill="url(#footerLogoGrad)"/>
+                <path d="M17 8C14 8 10 11 10 15c0 6 7 13 7 13s7-7 7-13c0-4-4-7-7-7z" fill="white" opacity="0.9"/>
+                <defs>
+                  <linearGradient id="footerLogoGrad" x1="0" y1="0" x2="34" y2="34">
+                    <stop offset="0%" stop-color="#2d7a4f"/>
+                    <stop offset="100%" stop-color="#5bb37a"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div class="logo-text">
+              <span class="logo-name">Healthys</span>
+              <span class="logo-tagline">Pure &amp; Natural</span>
+            </div>
+          </a>
+          <p class="footer-brand-desc">Bringing India's finest organic wellness products to every home. Trusted by 2 lakh+ families since 2018.</p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#" class="social-link" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="social-link" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+          </div>
+          <div class="certifications">
+            <span class="cert-badge"><i class="fa-solid fa-certificate"></i> FSSAI</span>
+            <span class="cert-badge"><i class="fa-solid fa-leaf"></i> Organic</span>
+            <span class="cert-badge"><i class="fa-solid fa-flask"></i> Lab Tested</span>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> About Us</a></li>
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> Blog &amp; Recipes</a></li>
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> Media &amp; Press</a></li>
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> Careers</a></li>
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> Wholesale / B2B</a></li>
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> Affiliate Program</a></li>
+          </ul>
+        </div>
+
+        <!-- Categories -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Categories</h4>
+          <ul class="footer-links">
+            <li><a href="#spices"><i class="fa-solid fa-angle-right"></i> Spices &amp; Masala</a></li>
+            <li><a href="#tea"><i class="fa-solid fa-angle-right"></i> Tea &amp; Drinks</a></li>
+            <li><a href="#healthy-food"><i class="fa-solid fa-angle-right"></i> Healthy Food</a></li>
+            <li><a href="#herbal"><i class="fa-solid fa-angle-right"></i> Herbal Powders</a></li>
+            <li><a href="#personal-care"><i class="fa-solid fa-angle-right"></i> Personal Care</a></li>
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> Combos &amp; Kits</a></li>
+          </ul>
+        </div>
+
+        <!-- Help -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Customer Help</h4>
+          <ul class="footer-links">
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> My Orders</a></li>
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> Track Order</a></li>
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> Returns &amp; Refunds</a></li>
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> Privacy Policy</a></li>
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> Terms &amp; Conditions</a></li>
+            <li><a href="#"><i class="fa-solid fa-angle-right"></i> FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Contact Us</h4>
+          <ul class="footer-contact">
+            <li><i class="fa-solid fa-location-dot"></i><span>42, Green Valley, Koramangala, Bengaluru – 560034</span></li>
+            <li><i class="fa-solid fa-phone"></i><a href="tel:+918001234567">+91 80 0123 4567</a></li>
+            <li><i class="fa-solid fa-envelope"></i><a href="mailto:hello@healthys.in">hello@healthys.in</a></li>
+            <li><i class="fa-solid fa-clock"></i><span>Mon – Sat, 9AM – 6PM IST</span></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>&copy; 2024 Healthys Pvt. Ltd. All rights reserved. Made with <i class="fa-solid fa-heart" style="color:#e55;"></i> in India.</p>
+        <div class="payment-methods">
+          <i class="fa-brands fa-cc-visa" title="Visa"></i>
+          <i class="fa-brands fa-cc-mastercard" title="Mastercard"></i>
+          <i class="fa-brands fa-google-pay" title="Google Pay"></i>
+          <i class="fa-brands fa-cc-paypal" title="PayPal"></i>
+          <span class="upi-badge">UPI</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======== CART TOAST ======== -->
+  <div class="cart-toast" id="cartToast">
+    <i class="fa-solid fa-check-circle"></i>
+    <span id="cartToastMsg">Product added to cart!</span>
+  </div>
+
+  <!-- ======== BACK TO TOP ======== -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <script src="api.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

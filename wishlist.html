@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Wishlist – Healthys</title>
+  <meta name="description" content="Your saved products wishlist on Healthys – India's premium wellness store."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="page-common.css"/>
+  <link rel="stylesheet" href="wishlist.css"/>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header-inner container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+            <circle cx="17" cy="17" r="17" fill="url(#lg2)"/>
+            <path d="M17 8C14 8 10 11 10 15c0 6 7 13 7 13s7-7 7-13c0-4-4-7-7-7z" fill="white" opacity="0.9"/>
+            <defs><linearGradient id="lg2" x1="0" y1="0" x2="34" y2="34"><stop offset="0%" stop-color="#2d7a4f"/><stop offset="100%" stop-color="#5bb37a"/></linearGradient></defs>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-name">Healthys</span>
+          <span class="logo-tagline">Pure &amp; Natural</span>
+        </div>
+      </a>
+      <nav class="page-nav">
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i> Cart</a>
+        <a href="profile.html"><i class="fa-regular fa-user"></i> Profile</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="wishlist.html" class="nav-icon active-page" aria-label="Wishlist">
+          <i class="fa-solid fa-heart"></i>
+          <span class="badge" id="wishlistBadge">0</span>
+        </a>
+        <a href="cart.html" class="nav-icon" aria-label="Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="badge" id="cartBadge">0</span>
+        </a>
+        <a href="profile.html" class="nav-icon" aria-label="Profile"><i class="fa-regular fa-user"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <i class="fa-solid fa-angle-right"></i>
+        <span>My Wishlist</span>
+      </div>
+      <h1 class="page-title"><i class="fa-solid fa-heart"></i> My Wishlist</h1>
+    </div>
+  </div>
+
+  <!-- WISHLIST CONTENT -->
+  <main class="wishlist-page container" id="wishlistPage">
+
+    <div class="page-loading" id="wishlistLoading">
+      <div class="spinner"></div>
+      <p>Loading your wishlist…</p>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state hidden" id="emptyWishlist">
+      <div class="empty-icon">💝</div>
+      <h2>Your wishlist is empty</h2>
+      <p>Save products you love by clicking the heart icon on any product card!</p>
+      <a href="index.html" class="btn btn-primary">Explore Products <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+    <!-- WISHLIST GRID -->
+    <div class="wishlist-layout hidden" id="wishlistLayout">
+      <div class="wishlist-header">
+        <h2>Saved Items <span class="cart-item-count" id="wishlistCount"></span></h2>
+        <div class="wishlist-actions">
+          <button class="btn btn-outline" id="addAllToCartBtn"><i class="fa-solid fa-bag-shopping"></i> Add All to Cart</button>
+          <button class="btn btn-ghost danger" id="clearWishlistBtn"><i class="fa-solid fa-trash"></i> Clear All</button>
+        </div>
+      </div>
+      <div class="product-grid" id="wishlistGrid"></div>
+    </div>
+  </main>
+
+  <!-- FOOTER SHORT -->
+  <footer class="footer-short">
+    <div class="container footer-short-inner">
+      <p>&copy; 2024 Healthys Pvt. Ltd. All rights reserved.</p>
+      <div class="footer-short-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cart-toast" id="cartToast">
+    <i class="fa-solid fa-check-circle"></i>
+    <span id="cartToastMsg">Done!</span>
+  </div>
+
+  <script src="api.js"></script>
+  <script src="wishlist.js"></script>
+</body>
+</html>

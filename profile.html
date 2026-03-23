@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile – Healthys</title>
+  <meta name="description" content="Manage your Healthys account – profile, orders, addresses and settings."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="page-common.css"/>
+  <link rel="stylesheet" href="profile.css"/>
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header-inner container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+            <circle cx="17" cy="17" r="17" fill="url(#lg3)"/>
+            <path d="M17 8C14 8 10 11 10 15c0 6 7 13 7 13s7-7 7-13c0-4-4-7-7-7z" fill="white" opacity="0.9"/>
+            <defs><linearGradient id="lg3" x1="0" y1="0" x2="34" y2="34"><stop offset="0%" stop-color="#2d7a4f"/><stop offset="100%" stop-color="#5bb37a"/></linearGradient></defs>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-name">Healthys</span>
+          <span class="logo-tagline">Pure &amp; Natural</span>
+        </div>
+      </a>
+      <nav class="page-nav">
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="wishlist.html"><i class="fa-solid fa-heart"></i> Wishlist</a>
+        <a href="cart.html"><i class="fa-solid fa-bag-shopping"></i> Cart</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="wishlist.html" class="nav-icon" aria-label="Wishlist">
+          <i class="fa-regular fa-heart"></i>
+          <span class="badge" id="wishlistBadge">0</span>
+        </a>
+        <a href="cart.html" class="nav-icon" aria-label="Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="badge" id="cartBadge">0</span>
+        </a>
+        <a href="profile.html" class="nav-icon active-page" aria-label="Profile">
+          <i class="fa-solid fa-user"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- AUTH SECTION (shown when not logged in) -->
+  <section class="auth-section" id="authSection">
+    <div class="auth-container">
+      <div class="auth-brand">
+        <div class="auth-logo">🌿</div>
+        <h1>Welcome to Healthys</h1>
+        <p>Sign in to access your profile, orders, and wishlist</p>
+      </div>
+
+      <!-- ═══ GOOGLE SIGN-IN ═══ -->
+      <button class="google-signin-btn" id="googleSignInBtn" onclick="handleGoogleSignIn()">
+        <svg width="20" height="20" viewBox="0 0 48 48" style="flex-shrink:0">
+          <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <!-- Google popup mock overlay -->
+      <div class="google-popup-overlay hidden" id="googlePopup">
+        <div class="google-popup">
+          <div class="gp-header">
+            <svg width="22" height="22" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+            <span>Sign in with Google</span>
+            <button class="gp-close" onclick="closeGooglePopup()">✕</button>
+          </div>
+          <div class="gp-body">
+            <div class="gp-title">Choose an account</div>
+            <div class="gp-subtitle">to continue to Healthys</div>
+            <div class="gp-accounts" id="gpAccounts">
+              <div class="gp-account" onclick="googleLoginWith('demo@gmail.com','Demo User')">
+                <div class="gp-avatar" style="background:linear-gradient(135deg,#4285f4,#34a853)">DU</div>
+                <div class="gp-account-info">
+                  <div class="gp-accname">Demo User</div>
+                  <div class="gp-accemail">demo@gmail.com</div>
+                </div>
+                <i class="fa-solid fa-angle-right"></i>
+              </div>
+              <div class="gp-other" onclick="showGoogleEmailInput()">
+                <i class="fa-solid fa-user-plus"></i>
+                Use another account
+              </div>
+            </div>
+            <div class="gp-email-input hidden" id="gpEmailInput">
+              <input type="text" id="gpName" placeholder="Your full name" class="gp-input"/>
+              <input type="email" id="gpEmail" placeholder="your@gmail.com" class="gp-input"/>
+              <button class="btn btn-primary full-width" onclick="googleLoginFromInput()">
+                <i class="fa-brands fa-google"></i> Continue with Google
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-divider"><span>or continue with email</span></div>
+
+      <!-- Auth Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="loginTab" onclick="switchTab('login')">Login</button>
+        <button class="auth-tab" id="registerTab" onclick="switchTab('register')">Create Account</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="loginEmail"><i class="fa-solid fa-envelope"></i> Email</label>
+          <input type="email" id="loginEmail" placeholder="your@email.com" required autocomplete="email"/>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword"><i class="fa-solid fa-lock"></i> Password</label>
+          <div class="password-wrap">
+            <input type="password" id="loginPassword" placeholder="Enter password" required autocomplete="current-password"/>
+            <button type="button" class="pwd-toggle" onclick="togglePwd('loginPassword',this)"><i class="fa-regular fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="form-error hidden" id="loginError"></div>
+        <button type="submit" class="btn btn-primary full-width" id="loginBtn">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </button>
+        <p class="auth-switch">Don't have an account? <a href="#" onclick="switchTab('register')">Create one →</a></p>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="regName"><i class="fa-solid fa-user"></i> Full Name</label>
+            <input type="text" id="regName" placeholder="Arjun Sharma" required autocomplete="name"/>
+          </div>
+          <div class="form-group">
+            <label for="regPhone"><i class="fa-solid fa-phone"></i> Phone</label>
+            <input type="tel" id="regPhone" placeholder="+91 9876543210" autocomplete="tel"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="regEmail"><i class="fa-solid fa-envelope"></i> Email</label>
+          <input type="email" id="regEmail" placeholder="your@email.com" required autocomplete="email"/>
+        </div>
+        <div class="form-group">
+          <label for="regPassword"><i class="fa-solid fa-lock"></i> Password</label>
+          <div class="password-wrap">
+            <input type="password" id="regPassword" placeholder="Min. 6 characters" required autocomplete="new-password"/>
+            <button type="button" class="pwd-toggle" onclick="togglePwd('regPassword',this)"><i class="fa-regular fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="form-error hidden" id="registerError"></div>
+        <button type="submit" class="btn btn-primary full-width" id="registerBtn">
+          <i class="fa-solid fa-user-plus"></i> Create Account
+        </button>
+        <p class="auth-switch">Already have an account? <a href="#" onclick="switchTab('login')">Login →</a></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- PROFILE SECTION (shown when logged in) -->
+  <section class="profile-section hidden" id="profileSection">
+    <div class="container">
+
+      <!-- Profile Sidebar + Content -->
+      <div class="profile-layout">
+
+        <!-- Sidebar -->
+        <aside class="profile-sidebar">
+          <div class="profile-avatar-card">
+            <div class="profile-avatar" id="sidebarAvatar">
+              <span id="avatarInitials">AK</span>
+            </div>
+            <div class="profile-avatar-info">
+              <div class="profile-avatar-name" id="sidebarName">User Name</div>
+              <div class="profile-avatar-email" id="sidebarEmail">email@example.com</div>
+            </div>
+          </div>
+
+          <nav class="profile-nav">
+            <button class="profile-nav-item active" onclick="showTab('overview')" id="nav-overview">
+              <i class="fa-solid fa-grip"></i> Overview
+            </button>
+            <button class="profile-nav-item" onclick="showTab('orders')" id="nav-orders">
+              <i class="fa-solid fa-box"></i> My Orders
+            </button>
+            <button class="profile-nav-item" onclick="showTab('addresses')" id="nav-addresses">
+              <i class="fa-solid fa-location-dot"></i> Addresses
+            </button>
+            <button class="profile-nav-item" onclick="showTab('edit')" id="nav-edit">
+              <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+            </button>
+            <button class="profile-nav-item" onclick="showTab('security')" id="nav-security">
+              <i class="fa-solid fa-shield-halved"></i> Security
+            </button>
+            <button class="profile-nav-item danger" onclick="handleLogout()">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+          </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="profile-main">
+
+          <!-- ── OVERVIEW TAB ── -->
+          <div class="profile-tab active" id="tab-overview">
+            <div class="tab-header">
+              <h2>Account Overview</h2>
+            </div>
+            <div class="overview-cards">
+              <div class="ov-card" onclick="showTab('orders')">
+                <div class="ov-icon" style="background:linear-gradient(135deg,#2d7a4f,#5bb37a)"><i class="fa-solid fa-box"></i></div>
+                <div class="ov-num" id="ovOrders">0</div>
+                <div class="ov-label">Orders</div>
+              </div>
+              <a href="wishlist.html" class="ov-card">
+                <div class="ov-icon" style="background:linear-gradient(135deg,#e05878,#f06292)"><i class="fa-solid fa-heart"></i></div>
+                <div class="ov-num" id="ovWishlist">0</div>
+                <div class="ov-label">Wishlist</div>
+              </a>
+              <a href="cart.html" class="ov-card">
+                <div class="ov-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)"><i class="fa-solid fa-bag-shopping"></i></div>
+                <div class="ov-num" id="ovCart">0</div>
+                <div class="ov-label">Cart Items</div>
+              </a>
+              <div class="ov-card" onclick="showTab('addresses')">
+                <div class="ov-icon" style="background:linear-gradient(135deg,#3b82f6,#60a5fa)"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="ov-num" id="ovAddresses">0</div>
+                <div class="ov-label">Addresses</div>
+              </div>
+            </div>
+
+            <!-- Recent Orders preview -->
+            <div class="recent-section">
+              <h3>Recent Orders</h3>
+              <div id="recentOrders"><p class="muted-text">No orders yet. <a href="index.html">Start shopping!</a></p></div>
+            </div>
+          </div>
+
+          <!-- ── ORDERS TAB ── -->
+          <div class="profile-tab hidden" id="tab-orders">
+            <div class="tab-header">
+              <h2>My Orders</h2>
+            </div>
+            <div id="ordersContent"><p class="muted-text">No orders yet. <a href="index.html">Start shopping!</a></p></div>
+          </div>
+
+          <!-- ── ADDRESSES TAB ── -->
+          <div class="profile-tab hidden" id="tab-addresses">
+            <div class="tab-header">
+              <h2>My Addresses</h2>
+              <button class="btn btn-primary" onclick="openAddressModal()"><i class="fa-solid fa-plus"></i> Add New</button>
+            </div>
+            <div id="addressesContent"><p class="muted-text">No addresses saved yet.</p></div>
+          </div>
+
+          <!-- ── EDIT PROFILE TAB ── -->
+          <div class="profile-tab hidden" id="tab-edit">
+            <div class="tab-header"><h2>Edit Profile</h2></div>
+            <form class="edit-form" id="editProfileForm" onsubmit="handleUpdateProfile(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Full Name</label>
+                  <input type="text" id="editName" required/>
+                </div>
+                <div class="form-group">
+                  <label>Phone</label>
+                  <input type="tel" id="editPhone"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Email <span class="muted-text" style="font-size:.75rem;">(cannot be changed)</span></label>
+                <input type="email" id="editEmail" disabled/>
+              </div>
+              <div class="form-error hidden" id="editProfileError"></div>
+              <div class="form-success hidden" id="editProfileSuccess"></div>
+              <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save Changes</button>
+            </form>
+          </div>
+
+          <!-- ── SECURITY TAB ── -->
+          <div class="profile-tab hidden" id="tab-security">
+            <div class="tab-header"><h2>Security</h2></div>
+            <form class="edit-form" id="changePasswordForm" onsubmit="handleChangePassword(event)">
+              <div class="form-group">
+                <label>Current Password</label>
+                <div class="password-wrap">
+                  <input type="password" id="currentPwd" required/>
+                  <button type="button" class="pwd-toggle" onclick="togglePwd('currentPwd',this)"><i class="fa-regular fa-eye"></i></button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>New Password</label>
+                <div class="password-wrap">
+                  <input type="password" id="newPwd" required minlength="6"/>
+                  <button type="button" class="pwd-toggle" onclick="togglePwd('newPwd',this)"><i class="fa-regular fa-eye"></i></button>
+                </div>
+              </div>
+              <div class="form-error hidden" id="pwdError"></div>
+              <div class="form-success hidden" id="pwdSuccess"></div>
+              <button type="submit" class="btn btn-primary"><i class="fa-solid fa-lock"></i> Change Password</button>
+            </form>
+          </div>
+
+        </div><!-- /profile-main -->
+      </div><!-- /profile-layout -->
+    </div>
+  </section>
+
+  <!-- ADD ADDRESS MODAL -->
+  <div class="modal-overlay hidden" id="addressModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Add New Address</h3>
+        <button class="modal-close" onclick="closeAddressModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="addAddressForm" onsubmit="handleAddAddress(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Label</label>
+            <select id="addrLabel">
+              <option value="Home">🏠 Home</option>
+              <option value="Work">🏢 Work</option>
+              <option value="Other">📍 Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Name on Address</label>
+            <input type="text" id="addrName" placeholder="Full name" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" id="addrPhone" placeholder="+91 98765 43210"/>
+        </div>
+        <div class="form-group">
+          <label>Address Line 1 *</label>
+          <input type="text" id="addrLine1" placeholder="House No., Street, Area" required/>
+        </div>
+        <div class="form-group">
+          <label>Address Line 2</label>
+          <input type="text" id="addrLine2" placeholder="Landmark (optional)"/>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>City *</label>
+            <input type="text" id="addrCity" placeholder="Mumbai" required/>
+          </div>
+          <div class="form-group">
+            <label>State *</label>
+            <input type="text" id="addrState" placeholder="Maharashtra" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Pincode *</label>
+          <input type="text" id="addrPincode" placeholder="400001" maxlength="6" required/>
+        </div>
+        <div class="form-group checkbox-group">
+          <label><input type="checkbox" id="addrDefault"/> Set as default address</label>
+        </div>
+        <div class="form-error hidden" id="addrError"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" onclick="closeAddressModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Address</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER SHORT -->
+  <footer class="footer-short">
+    <div class="container footer-short-inner">
+      <p>&copy; 2024 Healthys Pvt. Ltd. All rights reserved.</p>
+      <div class="footer-short-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cart-toast" id="cartToast">
+    <i class="fa-solid fa-check-circle"></i>
+    <span id="cartToastMsg">Done!</span>
+  </div>
+
+  <script src="api.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>
