@@ -4,9 +4,37 @@
     {
       "src": "server.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "**/*.{html,css,js,png,jpg,jpeg,gif,svg,ico,woff,woff2,ttf}",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf))",
+      "dest": "/$1"
+    },
+    {
+      "src": "/admin.html",
+      "dest": "/admin.html"
+    },
+    {
+      "src": "/cart.html",
+      "dest": "/cart.html"
+    },
+    {
+      "src": "/profile.html",
+      "dest": "/profile.html"
+    },
+    {
+      "src": "/wishlist.html",
+      "dest": "/wishlist.html"
+    },
     {
       "src": "/(.*)",
       "dest": "server.js"
